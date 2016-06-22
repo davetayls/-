@@ -1,0 +1,26 @@
+{
+  "name": "blackstar",
+  "version": "1.0.0",
+  "description": "A challenge to myself to design a responsive system which can bend to **someone else's** will",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davetayls/blackstar.git"
+  },
+  "author": "davetayls <http://davetayls.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davetayls/blackstar/issues"
+  },
+  "homepage": "https://github.com/davetayls/blackstar#readme",
+  "dependencies": {
+    "autoprefixer": "^6.3.6",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^6.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "precss": "^1.4.0"
+  }
+}
