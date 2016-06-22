@@ -6,6 +6,13 @@ I want to start by what it looks like and how it can cope with demands rather th
 
 I want it to be concise, readable and customisable at different responsive points.
 
+Despite common best-practices, i wonder whether a structure based on fractions rather than columns
+will be easier to work with and a lot less css heavy or complex. So I'm going to try it. The understanding
+being that
+
+a) designers don't always follow their own best practices and we have to accommodate it anyway
+b) developers can apply some nesting thought as they build
+
 Here's an initial musing:
 
 ```html
