@@ -9,6 +9,12 @@
       .◘ {
         background: red;
       }
+      .★ {
+        background-color: yellow;
+      }
+      .★ > [class*="★"] {
+        outline: solid 1px rgba(0,0,0,0.2);
+      }
     </style>
   </head>
   <body>
@@ -57,32 +63,54 @@
     <div class="★">
       <div class="★-|1/2">
         <div class="MyComponent">
-          <div class="★">
-            <div class="★-|1/2">
-              My component in this space should
-              have cells side-by-side
+          <div class="★ ★--gutters">
+            <div class="★-|1/2 ★-|1/4|1">
+              <div class="◘">
+                My component in this space should
+                have cells side-by-side
+              </div>
             </div>
-            <div class="★-|1/2">
-              Because there is more space
+            <div class="★-|1/2 ★-|1/4|1">
+              <div class="◘">
+                Because there is more space
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="★-|1/4">
         <div class="MyComponent">
-          <div class="★">
-            <div class="★-|1/2">
-              My component in this space should
-              stack but without changing markup.
+          <div class="★ ★--gutters">
+            <div class="★-|1/2 ★-|1/4|1">
+              <div class="◘">
+                My component in this space should
+                stack but without changing markup.
+              </div>
             </div>
-            <div class="★-|1/2">
-              So this cell is underneath
+            <div class="★-|1/2 ★-|1/4|1">
+              <div class="◘">
+                So this cell is underneath
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="★-|1/4">
-        <div class="◘">1/4</div>
+        <div class="MyComponent">
+          <div class="★ ★--gutters">
+            <div class="★-|1/2 ★-|1/4|1">
+              <div class="◘">
+                My component in this space should
+                stack but without changing markup.
+              </div>
+            </div>
+            <div class="★-|1/2 ★-|1/4|1">
+              <div class="◘">
+                So this cell is underneath
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

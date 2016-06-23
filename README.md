@@ -6,6 +6,11 @@ I want to start by what it looks like and how it can cope with demands rather th
 
 I want it to be concise, readable and customisable at different responsive points.
 
+I want it to focus on components and allow markup to be placed in different
+locations and "just work" or give you the power to fix it.
+
+I want to give this enough power that you don't need to add custom styling
+
 Despite common best-practices, i wonder whether a structure based on fractions rather than columns
 will be easier to work with and a lot less css heavy or complex. So I'm going to try it. The understanding
 being that

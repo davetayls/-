@@ -1,9 +1,11 @@
 
-> .★md-\|--flushLeft {
+> .★md-\|--flushLeft,
+> .★md-\|--flushLeft:first-child {
   padding-left: 0;
 }
 
-> .★md-\|--flushRight {
+> .★md-\|--flushRight,
+> .★md-\|--flushRight:last-child {
   padding-right: 0;
 }
 

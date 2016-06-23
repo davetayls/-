@@ -1,9 +1,11 @@
 
-.★lg-\|--flushLeft {
+> .★lg-\|--flushLeft,
+> .★lg-\|--flushLeft:first-child {
   padding-left: 0;
 }
 
-.★lg-\|--flushRight {
+> .★lg-\|--flushRight,
+> .★lg-\|--flushRight:last-child {
   padding-right: 0;
 }
 
