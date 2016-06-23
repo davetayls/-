@@ -9,6 +9,7 @@
   font-size: 1rem;
   box-sizing: border-box;
   border: solid 1px;
+  vertical-align: top;
 }
 
 .★--gutters > [class*="★"] {
