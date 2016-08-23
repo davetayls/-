@@ -1,8 +1,10 @@
 
+/* Using inline block so we need to zero out font */
 .★ {
   font-size: 0;
 }
 
+/* Setup containers inside the grid, resetting font */
 .★ > [class*="★"] {
   display: inline-block;
   font-size: 1rem;
@@ -10,18 +12,25 @@
   vertical-align: top;
 }
 
+@blackstar { }
+/*@blackstar sm (max-width: 599px) { }*/
+/*@blackstar md (min-width: 600px) { }*/
+/*@blackstar lg (min-width: 699px) { }*/
+
+/* Gutters */
 .★--gutters > [class*="★"] {
   padding-left: .5rem;
   padding-right: .5rem;
 }
 
+/*
 .★ .★--gutters > [class*="★"] {
-  &:first-child {
-     padding-left: .5rem;
-  }
-  &:last-child {
-    padding-right: .5rem;
-  }
+&:first-child {
+   padding-left: .5rem;
+ }
+&:last-child {
+   padding-right: .5rem;
+ }
 }
 
 .★ > :first-child .★ > :first-child .★--gutters > [class*="★"]:first-child,
@@ -46,25 +55,4 @@
 .★ > .★-\|--flushRight:last-child {
   padding-right: 0;
 }
-
-.★ { @import './base.css'; }
-.★ { @import './nesting.css'; }
-
-/* sm */
-.★sm { @import './sm.css'; }
-@media (max-width: 599px) {
- .★ { @import './sm.css'; }
-}
-
-/* md */
-.★md { @import './md.css'; }
-@media (min-width: 600px) {
-  .★ { @import './md.css'; }
-}
-
-/* lg */
-.★lg { @import './lg.css'; }
-@media (min-width: 699px) {
-  .★ { @import './lg.css'; }
-}
-
+*/

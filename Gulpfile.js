@@ -6,7 +6,11 @@ gulp.task('css', function() {
 
   return gulp.src('src/blackstar.css')
     .pipe(sourcemaps.init())
-    .pipe(postcss([require('autoprefixer'), require('precss')]))
+    .pipe(postcss([
+      require('autoprefixer'),
+      require('precss'),
+      require('./index')
+    ]))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('dist'));
 });
