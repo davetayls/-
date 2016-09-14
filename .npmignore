@@ -1,2 +1,4 @@
-Gulpfile.js
+/src
 .gitignore
+Gulpfile.js
+index.js

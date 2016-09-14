@@ -20,8 +20,8 @@ b) developers can apply some nesting thought as they build
 
 Here's an initial musing:
 
-```html
-<h1>Basic Grid Fractions</h1>
+```
+  <h1>Basic Grid Fractions</h1>
   <div class="★">
     <div class="★-|1/3 ★sm-|1/2">
       <div class="◘">1/3</div>
