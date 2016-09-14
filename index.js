@@ -14,13 +14,19 @@ module.exports = postcss.plugin('blackstar', function myplugin(options) {
       lg: {}
     };
     root.walkAtRules('blackstar', (atRule) => {
+      // Whole Rules
+      createFractionRule(combineRules, '', 1, 1);
+      createFractionRule(combineRules, 'sm', 1, 1);
+      createFractionRule(combineRules, 'md', 1, 1);
+      createFractionRule(combineRules, 'lg', 1, 1);
+
+      // Fractions
+      createFractions(combineRules, '', [2,3,4,6]);
       createFractions(combineRules, 'sm', [2,3,4,6]);
       createFractions(combineRules, 'md', [2,3,4,6]);
       createFractions(combineRules, 'lg', [2,3,4,6]);
-      // createFractionRule(combineRules, 'sm', 1, 2);
-      // createFractionRule(combineRules, 'sm', 1, 2, [[1,4]]);
-      // createFractionRule(combineRules, 'md', 1, 2);
 
+      // Output rules to stylesheet
       Object.keys(combineRules.root).forEach((k) => {
         let rule = combineRules.root[k];
         atRule.parent.insertBefore(atRule, rule);
@@ -38,17 +44,12 @@ function getClassName(namespace, fractionParts) {
   if (fractionParts && fractionParts.length) {
     let fractions = fractionParts
       .filter((part) => part && part.length === 2)
-      .map((part) => `${part[0]}\\/${part[1]}`);
+      .map((part) => {
+        return part[0] === part[1] ? part[0] : `${part[0]}\\/${part[1]}`
+      });
     className += `-\\|${fractions.join('\\|')}`;
   }
   return className;
-}
-
-function createPrefixStyles(combineRules, prefix) {
-  // createFractions(combineRules, prefix, inMediaQ, [2,3,4,6]);
-  // createFractions(atRule, prefix, inMediaQ, 3);
-  // createFractions(atRule, prefix, inMediaQ, 4);
-  // createFractions(atRule, prefix, inMediaQ, 6);
 }
 
 function createFractions(combineRules, namespace, fractions) {
@@ -78,8 +79,10 @@ function createFractionRule(combineRules, namespace, whole, fraction, insideFrac
   cssSelector.push(getClassName(namespace, insideFractions.concat([[whole,fraction]])));
   addRuleToHash(combineRules.root, ruleValue,
     [getClassName(namespace)].concat(cssSelector).join(' '));
-  addRuleToHash(combineRules[namespace], ruleValue,
-    [getClassName()].concat(cssSelector).join(' '));
+  if (namespace) {
+    addRuleToHash(combineRules[namespace], ruleValue,
+      [getClassName()].concat(cssSelector).join(' '));
+  }
 }
 
 function addRuleToHash(ruleHash, ruleValue, ruleSelector) {
@@ -88,20 +91,16 @@ function addRuleToHash(ruleHash, ruleValue, ruleSelector) {
     rule = ruleHash[ruleValue] = postcss.rule({
       selectors: [ruleSelector]
     });
-    rule.append({ prop: 'width', value: ruleValue });
+    if (ruleValue === '100%') {
+      rule.append({ prop: 'display', value: 'block' });
+      rule.append({ prop: 'width', value: 'auto' });
+    } else {
+      rule.append({ prop: 'width', value: ruleValue });
+    }
   } else {
     rule.selectors = rule.selectors.concat(ruleSelector);
   }
   console.log(rule.selectors);
-  return rule;
-}
-
-function createWholeRule(prefix, inMediaQ) {
-  let rule = postcss.rule({
-    selector: `.${BLACK_STAR}${inMediaQ ? '' : prefix} .${BLACK_STAR}${prefix}-\\|1`
-  });
-  rule.append({ prop: 'display', value: 'block' });
-  rule.append({ prop: 'width', value: 'auto' });
   return rule;
 }
 
