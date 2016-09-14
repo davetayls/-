@@ -13,9 +13,6 @@
 }
 
 @blackstar { }
-/*@blackstar sm (max-width: 599px) { }*/
-/*@blackstar md (min-width: 600px) { }*/
-/*@blackstar lg (min-width: 699px) { }*/
 
 /* Gutters */
 .★--gutters > [class*="★"] {

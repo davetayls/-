@@ -8,79 +8,84 @@ module.exports = postcss.plugin('blackstar', function myplugin(options) {
   return function(root) {
     options = options || {};
     let combineRules = {
-      root: {}
+      root: {},
+      sm: {},
+      md: {},
+      lg: {}
     };
     root.walkAtRules('blackstar', (atRule) => {
-      // const params = atRule.params === '' ? ['', ''] : /(\w+) ?(.*)?/.exec(atRule.params);
-      // if (params == null || params.length < 1) return;
-      // const prefix = params[1];
-      // const mediaQuery = params[2];
-      // console.log('blackstar', prefix, mediaQuery);
-      // if (mediaQuery) {
-      //   const mediaRule = postcss.atRule({
-      //     name: 'media',
-      //     params: mediaQuery
-      //   });
-      //   atRule.parent.insertBefore(atRule, mediaRule);
-      //   createPrefixStyles(mediaRule, prefix, true);
-      // }
-      // createPrefixStyles(combineRules, 'sm', false);
-      createFractionRule(combineRules, 'sm', 1, 2);
-      createFractionRule(combineRules, 'md', 1, 2);
-      createFractionRule(combineRules, 'sm', 1, 2, ['1/4']);
+      createFractions(combineRules, 'sm', [2,3,4,6]);
+      createFractions(combineRules, 'md', [2,3,4,6]);
+      createFractions(combineRules, 'lg', [2,3,4,6]);
+      // createFractionRule(combineRules, 'sm', 1, 2);
+      // createFractionRule(combineRules, 'sm', 1, 2, [[1,4]]);
+      // createFractionRule(combineRules, 'md', 1, 2);
+
       Object.keys(combineRules.root).forEach((k) => {
         let rule = combineRules.root[k];
         atRule.parent.insertBefore(atRule, rule);
       });
+      appendMediaQueryRules(atRule, combineRules.sm, '(max-width: 599px)');
+      appendMediaQueryRules(atRule, combineRules.md, '(min-width: 600px)');
+      appendMediaQueryRules(atRule, combineRules.lg, '(min-width: 699px)');
       atRule.remove();
     });
   }
 });
 
-function createPrefixStyles(combineRules, prefix, inMediaQ) {
-  // if (inMediaQ) {
-  //   atRule.append(createWholeRule(prefix, inMediaQ));
-  // } else {
-  //   atRule.parent.insertBefore(
-  //     atRule,
-  //     createWholeRule(prefix, inMediaQ)
-  //   );
-  // }
-  createFractions(combineRules, prefix, inMediaQ, [2,3,4,6]);
+function getClassName(namespace, fractionParts) {
+  let className = `.${BLACK_STAR}${namespace || ''}`;
+  if (fractionParts && fractionParts.length) {
+    let fractions = fractionParts
+      .filter((part) => part && part.length === 2)
+      .map((part) => `${part[0]}\\/${part[1]}`);
+    className += `-\\|${fractions.join('\\|')}`;
+  }
+  return className;
+}
+
+function createPrefixStyles(combineRules, prefix) {
+  // createFractions(combineRules, prefix, inMediaQ, [2,3,4,6]);
   // createFractions(atRule, prefix, inMediaQ, 3);
   // createFractions(atRule, prefix, inMediaQ, 4);
   // createFractions(atRule, prefix, inMediaQ, 6);
 }
 
-function createFractions(atRule, prefix, inMediaQ, fractions) {
-  let whole = 1;
-  let fraction = fractions[0];
-  while (whole < fraction) {
-    let rule = createFractionRule(
-      prefix,
-      inMediaQ,
-      [[whole, fraction]]
-    );
-    if (inMediaQ) {
-      atRule.append(rule);
-    } else {
-      atRule.parent.insertBefore(atRule, rule);
+function createFractions(combineRules, namespace, fractions) {
+  fractions.forEach((fraction) => {
+    let whole = 1;
+    while (whole < fraction) {
+      createFractionRule(
+        combineRules,
+        namespace,
+        whole,
+        fraction,
+        []
+      );
+      whole++;
     }
-    whole++;
-  }
+  });
 }
 
-function createFractionRule(combineRules, namespace, whole, fraction, nesting) {
-  let nesting = `.${BLACK_STAR}${namespace}`;
-  // if (!inMediaQ) nesting += prefix;
-  let preColumns = `${nesting} .${BLACK_STAR}${namespace}-\\|`;
-  let fractionNesting = `${whole}\\/${fraction}`;
+function createFractionRule(combineRules, namespace, whole, fraction, insideFractions) {
+  insideFractions = insideFractions || [];
+  let cssSelector = [];
   let widthPercentage = (whole * 100) / fraction;
   let ruleValue = `${widthPercentage}%`;
-  let ruleSelector = `${preColumns}${fractionNesting}`;
-  let rule = combineRules.root[ruleValue];
+  if (insideFractions && insideFractions.length) {
+    cssSelector.push(getClassName(namespace, insideFractions));
+  }
+  cssSelector.push(getClassName(namespace, insideFractions.concat([[whole,fraction]])));
+  addRuleToHash(combineRules.root, ruleValue,
+    [getClassName(namespace)].concat(cssSelector).join(' '));
+  addRuleToHash(combineRules[namespace], ruleValue,
+    [getClassName()].concat(cssSelector).join(' '));
+}
+
+function addRuleToHash(ruleHash, ruleValue, ruleSelector) {
+  let rule = ruleHash[ruleValue];
   if (!rule) {
-    rule = combineRules.root[ruleValue] = postcss.rule({
+    rule = ruleHash[ruleValue] = postcss.rule({
       selectors: [ruleSelector]
     });
     rule.append({ prop: 'width', value: ruleValue });
@@ -98,4 +103,16 @@ function createWholeRule(prefix, inMediaQ) {
   rule.append({ prop: 'display', value: 'block' });
   rule.append({ prop: 'width', value: 'auto' });
   return rule;
+}
+
+function appendMediaQueryRules(atRule, rules, params) {
+  const mqRule = postcss.atRule({
+    name: 'media',
+    params: params
+  });
+  atRule.parent.insertBefore(atRule, mqRule);
+  Object.keys(rules).forEach((k) => {
+    let rule = rules[k];
+    mqRule.append(rule);
+  });
 }
