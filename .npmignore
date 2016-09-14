@@ -1,4 +1,6 @@
 /src
+.idea
 .gitignore
+.npmignore
 Gulpfile.js
-index.js
+/index.js
