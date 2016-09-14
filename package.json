@@ -1,6 +1,6 @@
 {
   "name": "blackstar",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A challenge to myself to design a responsive system which can bend to **someone else's** will",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "url": "https://github.com/davetayls/blackstar/issues"
   },
   "homepage": "https://github.com/davetayls/blackstar#readme",
-  "dependencies": {
+  "devDependencies": {
     "autoprefixer": "^6.3.6",
     "gulp": "^3.9.1",
     "gulp-postcss": "^6.1.1",
