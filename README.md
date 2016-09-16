@@ -1,76 +1,90 @@
-# ★
+# ★ Responsive Grid System
 
-A challenge to myself to design a responsive system which can bend to **someone else's** will
+This began as a bit of an experiment but is proving to be quite useful.
 
-I want to start by what it looks like and how it can cope with demands rather than what tech is used underneath.
+It is a grid system based on fractions which encourages modular semantics and flexibility to control a cell based on it's context within the system.
 
-I want it to be concise, readable and customisable at different responsive points.
+## Installation
 
-I want it to focus on components and allow markup to be placed in different
-locations and "just work" or give you the power to fix it.
+Currently only available from the dist folder in this git repo or npm.
 
-I want to give this enough power that you don't need to add custom styling
+`npm install blackstar --save`
 
-Despite common best-practices, i wonder whether a structure based on fractions rather than columns
-will be easier to work with and a lot less css heavy or complex. So I'm going to try it. The understanding
-being that
+## Rules
 
-a) designers don't always follow their own best practices and we have to accommodate it anyway
-b) developers can apply some nesting thought as they build
+### All columns should be wrapped in the `★` class.
 
-Here's an initial musing:
+### Media Sizes
+The media sizes available currently map to these media queries however this might change to target particular sizes.
+
+Size | Media Query
+-- | --
+No namespace | everywhere
+`sm` | (min-width: 568px)
+`md` | (min-width: 768px)
+`lg` | (min-width:1024px)
+`xl` | (min-width: 1280px)
+
+### Cell ClassName format
+
+Class names for cells follow the following format and allow for the fractions based on 1,2,3,4,6
+
+`★[namespace]-|[fraction][|fraction]`
+
+Here are some examples:
 
 ```
-  <h1>Basic Grid Fractions</h1>
+★-|1 => full width block
+★-|1/2 => half
+★-|2/3 => two thirds
+★-|2/3|1/2 => half when inside two thirds
+```
+
+Nesting is provided for a single level deep. So we don't currently include something like `★-|2/3|1/2|1/2`.
+
+## Examples
+Here are some examples of what it might look like:
+
+```
   <div class="★">
-    <div class="★-|1/3 ★sm-|1/2">
-      <div class="◘">1/3</div>
+    <div class="★-|1/3">
+      <div>...</div>
     </div>
-    <div class="★-|1/3 ★sm-|1/2">
-      <div class="◘">1/3</div>
+    <div class="★-|1/3 ★sm-|1/2 ★-|1/2|1/2 ">
+      <div>...</div>
     </div>
-    <div class="★-|1/3 ★sm-|1">
-      <div class="◘">1/3</div>
+    <div class="★-|1/3 ★sm-|1 ★-|1/2|1">
+      <div>...</div>
     </div>
   </div>
-  
+```
+
+## Gutters
+```  
   <h1>Gutters</h1>
   <h2>Gutters everywhere</h2>
   <div class="★ ★--gutters">
     <div class="★-|1/3 ★sm-|1/2">
-      <div class="◘">1/3</div>
+      <div>...</div>
     </div>
     <div class="★-|1/3 ★sm-|1/2">
-      <div class="◘">1/3</div>
+      <div>...</div>
     </div>
     <div class="★-|1/3 ★sm-|1">
-      <div class="◘">1/3</div>
-    </div>
-  </div>  
-
-  <h2>Gutters on cols</h2>
-  <div class="★">
-    <div class="★-|1/3 ★sm-|1/2">
-      <div class="◘">1/3</div>
-    </div>
-    <div class="★-|1/3 ★sm-|1/2">
-      <div class="◘">1/3</div>
-    </div>
-    <div class="★-|1/3 ★sm-|1">
-      <div class="◘">1/3</div>
+      <div>...</div>
     </div>
   </div>  
 
   <h2>Gutters with flush</h2>
   <div class="★ ★--gutters">
-    <div class="★-|1/3 ★sm-|1/2 ★md-|--flushLeft">
-      <div class="◘">1/3</div>
+    <div class="★-|1/3 ★sm-|1/2 ★md-|flushLeft">
+      <div>...</div>
     </div>
     <div class="★-|1/3 ★sm-|1/2">
-      <div class="◘">1/3</div>
+      <div>...</div>
     </div>
-    <div class="★-|1/3 ★sm-|1 ★md-|--flushRight">
-      <div class="◘">1/3</div>
+    <div class="★-|1/3 ★sm-|1 ★md-|flushRight">
+      <div>...</div>
     </div>
   </div>  
 ```
