@@ -66,8 +66,6 @@ Here are some examples of what it might look like:
 
 ## Gutters
 ```  
-  <h1>Gutters</h1>
-  <h2>Gutters everywhere</h2>
   <div class="★ ★--gutters">
     <div class="★-|1/3 ★sm-|1/2">
       <div>...</div>
@@ -78,10 +76,42 @@ Here are some examples of what it might look like:
     <div class="★-|1/3 ★sm-|1">
       <div>...</div>
     </div>
-  </div>  
+  </div>
+```
 
-  <h2>Gutters with flush</h2>
+## Responsive Gutters
+```  
+  <div class="★ ★md--gutters">
+    <div class="★-|1/3 ★sm-|1/2">
+      <div>...</div>
+    </div>
+    <div class="★-|1/3 ★sm-|1/2">
+      <div>...</div>
+    </div>
+    <div class="★-|1/3 ★sm-|1">
+      <div>...</div>
+    </div>
+  </div>
+```
+
+## Gutters with flush
+```
   <div class="★ ★--gutters">
+    <div class="★-|1/3 ★sm-|1/2 ★-|flushLeft">
+      <div>...</div>
+    </div>
+    <div class="★-|1/3 ★sm-|1/2">
+      <div>...</div>
+    </div>
+    <div class="★-|1/3 ★sm-|1 ★-|flushRight">
+      <div>...</div>
+    </div>
+  </div>  
+```
+
+## Responsive Gutters with flush
+```
+  <div class="★ ★md--gutters">
     <div class="★-|1/3 ★sm-|1/2 ★md-|flushLeft">
       <div>...</div>
     </div>
