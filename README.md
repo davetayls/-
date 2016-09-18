@@ -38,6 +38,11 @@ Here are some examples:
 ★-|1/2 => half
 ★-|2/3 => two thirds
 ★-|2/3|1/2 => half when inside two thirds
+
+★sm-|1 => full width block on small device
+★sm-|1/2 => half on small device
+★sm-|2/3 => two thirds on small device
+★sm-|2/3|1/2 => half when inside two thirds on small device
 ```
 
 Nesting is provided for a single level deep. So we don't currently include something like `★-|2/3|1/2|1/2`.

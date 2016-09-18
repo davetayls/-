@@ -25,6 +25,7 @@
   padding-right: .5rem;
 }
 
+
 /*
 .★ > :first-child .★ > :first-child .★--gutters > [class*="★"]:first-child,
 .★ > :first-child .★--gutters > [class*="★"]:first-child,
@@ -37,15 +38,5 @@
 .★ > :last-child .★--gutters > .★-\|1\/4\|1,
 .★--gutters > [class*="★"]:last-child {
   padding-right: 1rem;
-}
-
-.★ > .★-\|--flushLeft,
-.★ > .★-\|--flushLeft:first-child {
-  padding-left: 0;
-}
-
-.★ > .★-\|--flushRight,
-.★ > .★-\|--flushRight:last-child {
-  padding-right: 0;
 }
 */

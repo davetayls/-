@@ -4,34 +4,31 @@ var fs = require('fs');
 var postcss = require('postcss');
 
 const BLACK_STAR = '★';
+const DEVICE_NAMESPACES = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
+const FRACTION_BASES = [2,3,4,5,6];
 
 module.exports = postcss.plugin('blackstar', function myplugin(options) {
   return function(root) {
     options = options || {};
-    let combineRules = { root: {}, sm: {}, md: {}, lg: {}, xl: {} };
+    let combineRules = { root: {}, xs: {}, sm: {}, md: {}, lg: {}, xl: {} };
     root.walkAtRules('blackstar', (atRule) => {
 
-      // Whole Rules
-      createFractionRule(combineRules, '', 1, 1);
-      createFractionRule(combineRules, 'sm', 1, 1);
-      createFractionRule(combineRules, 'md', 1, 1);
-      createFractionRule(combineRules, 'lg', 1, 1);
-      createFractionRule(combineRules, 'xl', 1, 1);
-
-      // Fractions
-      createFractions(combineRules, '', [2,3,4,6]);
-      createFractions(combineRules, 'sm', [2,3,4,6]);
-      createFractions(combineRules, 'md', [2,3,4,6]);
-      createFractions(combineRules, 'lg', [2,3,4,6]);
-      createFractions(combineRules, 'xl', [2,3,4,6]);
+      DEVICE_NAMESPACES.forEach((namespace) => {
+        createFractionRule(combineRules, namespace, 1, 1);
+        createFractions(combineRules, namespace, FRACTION_BASES);
+        addGuttersHash(combineRules, namespace);
+        addFlushRules(combineRules, namespace);
+      });
 
       // Output rules to stylesheet
       Object.keys(combineRules.root).forEach((k) => {
         let rule = combineRules.root[k];
         atRule.parent.insertBefore(atRule, rule);
       });
-      appendMediaQueryRules(atRule, combineRules.sm, '(min-width: 568px)');
-      appendMediaQueryRules(atRule, combineRules.md, '(min-width: 768px)');
+
+      appendMediaQueryRules(atRule, combineRules.xs, '(max-width: 544px)');
+      appendMediaQueryRules(atRule, combineRules.sm, '(min-width: 545px) and (max-width: 767px)');
+      appendMediaQueryRules(atRule, combineRules.md, '(min-width: 768px) and (max-width: 1023px)');
       appendMediaQueryRules(atRule, combineRules.lg, '(min-width: 1024px)');
       appendMediaQueryRules(atRule, combineRules.xl, '(min-width: 1280px)');
       atRule.remove();
@@ -51,6 +48,12 @@ function getClassName(namespace, fractionParts) {
     className += `-\\|${fractions.join('\\|')}`;
   }
   return className;
+}
+
+function getFlushClassName(namespace, side) {
+  let className = getClassName(namespace);
+  let sideKey = side === 'left' ? 'flushLeft' : 'flushRight';
+  return `[class*="${BLACK_STAR}"]${className}-\\|${sideKey}`;
 }
 
 function createFractions(combineRules, namespace, fractions) {
@@ -81,10 +84,11 @@ function createFractionRule(combineRules, namespace, whole, fraction, insideFrac
     cssSelector.push(getClassName(namespace, insideFractions));
   }
   cssSelector.push(getClassName(namespace, insideFractions.concat([[whole,fraction]])));
-  addRuleToHash(combineRules.root, ruleValue,
-    [getClassName(namespace), '>'].concat(cssSelector).join(' '));
   if (namespace) {
     addRuleToHash(combineRules[namespace], ruleValue,
+      [getClassName(), '>'].concat(cssSelector).join(' '));
+  } else {
+    addRuleToHash(combineRules.root, ruleValue,
       [getClassName(), '>'].concat(cssSelector).join(' '));
   }
 }
@@ -118,4 +122,47 @@ function appendMediaQueryRules(atRule, rules, params) {
     let rule = rules[k];
     mqRule.append(rule);
   });
+}
+
+function addGuttersHash(combineRules, namespace) {
+  let ruleHash = combineRules[namespace || 'root'];
+  let ruleValue = 'gutters';
+  let ruleSelector = getClassName(namespace) + '--gutters';
+  let guttersRule = ruleHash[ruleValue];
+  if (!guttersRule) {
+    guttersRule = ruleHash[ruleValue] = postcss.rule({
+      selectors: [
+        ruleSelector,
+        ruleSelector + ` > [class*="${BLACK_STAR}"]`
+      ]
+    });
+    guttersRule.append({ prop: 'padding-left', value: '.5rem' });
+    guttersRule.append({ prop: 'padding-right', value: '.5rem' });
+  }
+  return guttersRule;
+}
+
+function addFlushRules(combineRules, namespace) {
+  let cssSelector = [getClassName(), '>'];
+  let leftCssSelector = cssSelector.concat([getFlushClassName(namespace, 'left')]);
+  let rightCssSelector = cssSelector.concat([getFlushClassName(namespace, 'right')]);
+  addFlushHash(combineRules, namespace, 'left',
+    leftCssSelector.join(' '));
+  addFlushHash(combineRules, namespace, 'right',
+    rightCssSelector.join(' '));
+}
+
+function addFlushHash(combineRules, namespace, side, ruleSelector) {
+  let ruleHash = combineRules[namespace || 'root'];
+  let ruleValue = side === 'left' ? 'flushLeft' : 'flushRight';
+  let flushLeftRule = ruleHash[ruleValue];
+  if (!flushLeftRule) {
+    flushLeftRule = ruleHash[ruleValue] = postcss.rule({
+      selectors: [ruleSelector]
+    });
+    flushLeftRule.append({ prop: 'padding-' + side, value: 0 });
+  } else {
+    flushLeftRule.selectors = flushLeftRule.selectors.concat(ruleSelector);
+  }
+  return flushLeftRule;
 }
