@@ -17,13 +17,13 @@ Currently only available from the dist folder in this git repo or npm.
 ### Media Sizes
 The media sizes available currently map to these media queries however this might change to target particular sizes.
 
-Size | Media Query
--- | --
-No namespace | everywhere
-`sm` | (min-width: 568px)
-`md` | (min-width: 768px)
-`lg` | (min-width:1024px)
-`xl` | (min-width: 1280px)
+| Size | Media Query |
+| -- | -- |
+| No namespace | everywhere |
+| `sm` | (min-width: 568px) |
+| `md` | (min-width: 768px) |
+| `lg` | (min-width:1024px) |
+| `xl` | (min-width: 1280px) |
 
 ### Cell ClassName format
 
