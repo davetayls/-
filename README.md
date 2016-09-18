@@ -20,8 +20,9 @@ The media sizes available currently map to these media queries however this migh
 | Size | Media Query |
 | ---- | ---- |
 | No namespace | everywhere |
-| `sm` | (min-width: 568px) |
-| `md` | (min-width: 768px) |
+| `xs` | (max-width: 544px) |
+| `sm` | (min-width: 545px) and (max-width: 767px) |
+| `md` | (min-width: 768px) and (max-width: 1023px) |
 | `lg` | (min-width:1024px) |
 | `xl` | (min-width: 1280px) |
 
