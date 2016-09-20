@@ -10,10 +10,10 @@
         background: red;
         min-height: 20px;
       }
-      .★ {
+      .\| {
         background-color: yellow;
       }
-      .★ > [class*="★"] {
+      .\| > [class*="|"] {
         outline: solid 1px rgba(0,0,0,0.2);
       }
     </style>
@@ -26,43 +26,43 @@
 
     <h1>Gutters</h1>
     <h2>Gutters everywhere</h2>
-    <div class="★ ★--gutters">
-      <div class="★-|1/2 ★md-|1/3">
+    <div class="| |--gutters">
+      <div class="|-1/2 |md-1/3">
         <div class="◘"></div>
       </div>
-      <div class="★-|1/2 ★md-|1/3">
+      <div class="|-1/2 |md-1/3">
         <div class="◘"></div>
       </div>
-      <div class="★-|1 ★md-|1/3">
+      <div class="|-1 |md-1/3">
         <div class="◘"></div>
       </div>
     </div>
 
     <h2>Gutters with flush</h2>
-    <div class="★ ★--gutters">
-      <div class="★-|1/3 ★sm-|1/2 ★md-|--flushLeft">
+    <div class="| |--gutters">
+      <div class="|-1/3 |sm-1/2 |md---flushLeft">
         <div class="◘">1/3</div>
       </div>
-      <div class="★-|1/3 ★sm-|1/2">
+      <div class="|-1/3 |sm-1/2">
         <div class="◘">1/3</div>
       </div>
-      <div class="★-|1/3 ★sm-|1 ★md-|--flushRight">
+      <div class="|-1/3 |sm-1 |md---flushRight">
         <div class="◘">1/3</div>
       </div>
     </div>
 
     <h1>Components</h1>
-    <div class="★">
-      <div class="★-|1/2">
+    <div class="|">
+      <div class="|-1/2">
         <div class="MyComponent">
-          <div class="★ ★--gutters">
-            <div class="★-|1/2 ★-|1/4|1">
+          <div class="| |--gutters">
+            <div class="|-1/2 |-1/4|1">
               <div class="◘">
                 My component in this space should
                 have cells side-by-side
               </div>
             </div>
-            <div class="★-|1/2 ★-|1/4|1">
+            <div class="|-1/2 |-1/4|1">
               <div class="◘">
                 Because there is more space
               </div>
@@ -70,16 +70,16 @@
           </div>
         </div>
       </div>
-      <div class="★-|1/4">
+      <div class="|-1/4">
         <div class="MyComponent">
-          <div class="★ ★--gutters">
-            <div class="★-|1/2 ★-|1/4|1">
+          <div class="| |--gutters">
+            <div class="|-1/2 |-1/4|1">
               <div class="◘">
                 My component in this space should
                 stack but without changing markup.
               </div>
             </div>
-            <div class="★-|1/2 ★-|1/4|1">
+            <div class="|-1/2 |-1/4|1">
               <div class="◘">
                 So this cell is underneath
               </div>
@@ -87,16 +87,16 @@
           </div>
         </div>
       </div>
-      <div class="★-|1/4">
+      <div class="|-1/4">
         <div class="MyComponent">
-          <div class="★ ★--gutters">
-            <div class="★-|1/2 ★-|1/4|1">
+          <div class="| |--gutters">
+            <div class="|-1/2 |-1/4|1">
               <div class="◘">
                 My component in this space should
                 stack but without changing markup.
               </div>
             </div>
-            <div class="★-|1/2 ★-|1/4|1">
+            <div class="|-1/2 |-1/4|1">
               <div class="◘">
                 So this cell is underneath
               </div>
@@ -107,32 +107,32 @@
     </div>
 
     <h1>Nesting</h1>
-    <div class="★">
-      <div class="★-|1/2">
-        <div class="★">
-          <div class="★-|1/2">
+    <div class="|">
+      <div class="|-1/2">
+        <div class="|">
+          <div class="|-1/2">
             <div class="◘">1/4</div>
           </div>
-          <div class="★-|1/2">
+          <div class="|-1/2">
             <div class="◘">1/4</div>
           </div>
         </div>
       </div>
-      <div class="★-|1/2">
+      <div class="|-1/2">
         <div class="◘">1/2</div>
       </div>
     </div>
-    <div class="★">
-      <div class="★-|1/4">
+    <div class="|">
+      <div class="|-1/4">
         <div class="◘">1/4</div>
       </div>
-      <div class="★-|1/4">
+      <div class="|-1/4">
         <div class="◘">1/4</div>
       </div>
-      <div class="★-|1/4">
+      <div class="|-1/4">
         <div class="◘">1/4</div>
       </div>
-      <div class="★-|1/4">
+      <div class="|-1/4">
         <div class="◘">1/4</div>
       </div>
     </div>
@@ -150,10 +150,10 @@
         var variation = fraction - 1;
         while (variation > 0) {
           var row = document.createElement('div');
-          row.classList.add('★');
+          row.classList.add('|');
           basicVariations.appendChild(row);
           var cell = document.createElement('div');
-          cell.classList.add('★' + (namespace || '') + '-|' + variation + '/' + fraction);
+          cell.classList.add('|' + (namespace || '') + '-' + variation + '/' + fraction);
           cell.innerText = variation + '/' + fraction;
           row.appendChild(cell);
           variation--;

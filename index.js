@@ -3,9 +3,9 @@
 var fs = require('fs');
 var postcss = require('postcss');
 
-const BLACK_STAR = '★';
+const BLACK_STAR = '\\|';
 const DEVICE_NAMESPACES = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
-const FRACTION_BASES = [2,3,4,5,6];
+const FRACTION_BASES = [1,2,3,4,5,6];
 
 module.exports = postcss.plugin('blackstar', function myplugin(options) {
   return function(root) {
@@ -14,7 +14,6 @@ module.exports = postcss.plugin('blackstar', function myplugin(options) {
     root.walkAtRules('blackstar', (atRule) => {
 
       DEVICE_NAMESPACES.forEach((namespace) => {
-        createFractionRule(combineRules, namespace, 1, 1);
         createFractions(combineRules, namespace, FRACTION_BASES);
         addGuttersHash(combineRules, namespace);
         addFlushRules(combineRules, namespace);
@@ -45,7 +44,7 @@ function getClassName(namespace, fractionParts) {
       .map((part) => {
         return part[0] === part[1] ? part[0] : `${part[0]}\\/${part[1]}`
       });
-    className += `-\\|${fractions.join('\\|')}`;
+    className += `-${fractions.join('\\|')}`;
   }
   return className;
 }
@@ -59,13 +58,13 @@ function getFlushClassName(namespace, side) {
 function createFractions(combineRules, namespace, fractions) {
   fractions.forEach((fraction) => {
     let whole = 1;
-    while (whole < fraction) {
+    while (whole === 1 || whole < fraction) {
       // Rule with no nesting
       createFractionRule(combineRules, namespace, whole, fraction, []);
       // Single level of nesting
       fractions.forEach((nestedFraction) => {
         let nestedWhole = 1;
-        while (nestedWhole < nestedFraction) {
+        while (nestedWhole === 1 || nestedWhole < nestedFraction) {
           createFractionRule(combineRules, namespace, whole, fraction, [[nestedWhole,nestedFraction]]);
           nestedWhole++;
         }

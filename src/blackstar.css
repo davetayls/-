@@ -1,15 +1,15 @@
 
 /* Using inline block so we need to zero out font */
-.★, .★sm, .★md, .★lg, .★xl {
+.\|, .\|sm, .\|md, .\|lg, .\|xl {
   font-size: 0;
 }
 
 /* Setup containers inside the grid, resetting font */
-.★ > [class*="★"],
-.★sm > [class*="★"],
-.★md > [class*="★"],
-.★lg > [class*="★"],
-.★xl > [class*="★"] {
+.\| > [class*="|"],
+.\|sm > [class*="|"],
+.\|md > [class*="|"],
+.\|lg > [class*="|"],
+.\|xl > [class*="|"] {
   display: inline-block;
   font-size: 1rem;
   box-sizing: border-box;
@@ -18,25 +18,17 @@
 
 @blackstar { }
 
-/* Gutters */
-.★--gutters,
-.★--gutters > [class*="★"] {
-  padding-left: .5rem;
-  padding-right: .5rem;
-}
-
-
 /*
-.★ > :first-child .★ > :first-child .★--gutters > [class*="★"]:first-child,
-.★ > :first-child .★--gutters > [class*="★"]:first-child,
-.★--gutters > [class*="★"]:first-child {
+.\| > :first-child .\| > :first-child .\|--gutters > [class*="\|"]:first-child,
+.\| > :first-child .\|--gutters > [class*="\|"]:first-child,
+.\|--gutters > [class*="\|"]:first-child {
   padding-left: 1rem;
 }
 
-.★ > :last-child .★ > :last-child .★--gutters > [class*="★"]:last-child,
-.★ > :last-child .★--gutters > [class*="★"]:last-child,
-.★ > :last-child .★--gutters > .★-\|1\/4\|1,
-.★--gutters > [class*="★"]:last-child {
+.\| > :last-child .\| > :last-child .\|--gutters > [class*="\|"]:last-child,
+.\| > :last-child .\|--gutters > [class*="\|"]:last-child,
+.\| > :last-child .\|--gutters > .\|-\|1\/4\|1,
+.\|--gutters > [class*="\|"]:last-child {
   padding-right: 1rem;
 }
 */
