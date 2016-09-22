@@ -3,7 +3,7 @@
 var fs = require('fs');
 var postcss = require('postcss');
 
-const BLACK_STAR = '\\|';
+const BLACK_STAR = 'bs';
 const DEVICE_NAMESPACES = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 const FRACTION_BASES = [1,2,3,4,5,6];
 
@@ -12,6 +12,8 @@ module.exports = postcss.plugin('blackstar', function myplugin(options) {
     options = options || {};
     let combineRules = { root: {}, xs: {}, sm: {}, md: {}, lg: {}, xl: {} };
     root.walkAtRules('blackstar', (atRule) => {
+
+      addGlobalRules(combineRules, DEVICE_NAMESPACES);
 
       DEVICE_NAMESPACES.forEach((namespace) => {
         createFractions(combineRules, namespace, FRACTION_BASES);
@@ -53,6 +55,18 @@ function getFlushClassName(namespace, side) {
   let className = getClassName(namespace);
   let sideKey = side === 'left' ? 'flushLeft' : 'flushRight';
   return `[class*="${BLACK_STAR}"]${className}-\\|${sideKey}`;
+}
+
+function addGlobalRules(combineRules, allNamespaces) {
+  let ruleHash = combineRules.root;
+  let fontSizeRule = ruleHash['font-size'] = postcss.rule({
+    selectors: allNamespaces.map((namespace) => `.${BLACK_STAR}${namespace}`)
+  });
+  fontSizeRule.append({ prop: 'font-size', value: 0 });
+  // let colRule = ruleHash['col'] = postcss.rule({
+  //   selectors: [`.${BLACK_STAR} > [class*="${BLACK_STAR}"]`]
+  // });
+  // colRule.append({ prop: 'display', value: 'inline-block' });
 }
 
 function createFractions(combineRules, namespace, fractions) {
@@ -105,6 +119,9 @@ function addRuleToHash(ruleHash, ruleValue, ruleSelector) {
       rule.append({ prop: 'display', value: 'inline-block' });
       rule.append({ prop: 'width', value: ruleValue });
     }
+    rule.append({ prop: 'font-size', value: '1rem' });
+    rule.append({ prop: 'box-sizing', value: 'border-box' });
+    rule.append({ prop: 'vertical-align', value: 'top' });
   } else {
     rule.selectors = rule.selectors.concat(ruleSelector);
   }

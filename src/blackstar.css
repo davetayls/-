@@ -1,20 +1,7 @@
 
-/* Using inline block so we need to zero out font */
-.\|, .\|sm, .\|md, .\|lg, .\|xl {
-  font-size: 0;
-}
-
-/* Setup containers inside the grid, resetting font */
-.\| > [class*="|"],
-.\|sm > [class*="|"],
-.\|md > [class*="|"],
-.\|lg > [class*="|"],
-.\|xl > [class*="|"] {
-  display: inline-block;
-  font-size: 1rem;
-  box-sizing: border-box;
-  vertical-align: top;
-}
+/**
+  BlackStar
+*/
 
 @blackstar { }
 
