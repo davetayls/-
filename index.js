@@ -51,10 +51,11 @@ function getClassName(namespace, fractionParts) {
   return className;
 }
 
-function getFlushClassName(namespace, side) {
+function getFlushClassName(namespace, side, isRoot) {
   let className = getClassName(namespace);
   let sideKey = side === 'left' ? 'flushLeft' : 'flushRight';
-  return `[class*="${BLACK_STAR}"]${className}-\\|${sideKey}`;
+  let sideSeparator = isRoot ? '--' : '-\\|';
+  return `${className}${sideSeparator}${sideKey}`;
 }
 
 function addGlobalRules(combineRules, allNamespaces) {
@@ -159,9 +160,13 @@ function addGuttersHash(combineRules, namespace) {
 }
 
 function addFlushRules(combineRules, namespace) {
-  let cssSelector = [getClassName(), '>'];
-  let leftCssSelector = cssSelector.concat([getFlushClassName(namespace, 'left')]);
-  let rightCssSelector = cssSelector.concat([getFlushClassName(namespace, 'right')]);
+  let cssSelector = [getClassName()];
+  let rootLeftCssSelector = cssSelector + getFlushClassName(namespace, 'left', true);
+  let rootRightCssSelector = cssSelector + getFlushClassName(namespace, 'right', true);
+  let leftCssSelector = cssSelector.concat(['>', getFlushClassName(namespace, 'left')]);
+  let rightCssSelector = cssSelector.concat(['>', getFlushClassName(namespace, 'right')]);
+  addFlushHash(combineRules, namespace, 'left', rootLeftCssSelector);
+  addFlushHash(combineRules, namespace, 'right', rootRightCssSelector);
   addFlushHash(combineRules, namespace, 'left',
     leftCssSelector.join(' '));
   addFlushHash(combineRules, namespace, 'right',

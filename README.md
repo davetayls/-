@@ -1,4 +1,4 @@
-# bs Responsive Grid System
+# ★ Responsive Grid System
 
 This began as a bit of an experiment but is proving to be quite useful.
 
@@ -21,6 +21,10 @@ You can inject these styles into your stylesheet using PostCSS. I'll add some cu
 ```
 @blackstar {}
 ```
+
+## Examples
+
+There are a number of examples in the docs.html file in the root of the project.
 
 ## Rules
 

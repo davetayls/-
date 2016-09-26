@@ -171,12 +171,12 @@
     padding-right: .5rem
 }
 
-.bs > [class*="bs"].bs-\|flushLeft {
+.bs.bs--flushLeft, .bs > .bs-\|flushLeft {
 
     padding-left: 0
 }
 
-.bs > [class*="bs"].bs-\|flushRight {
+.bs.bs--flushRight, .bs > .bs-\|flushRight {
 
     padding-right: 0
 }
@@ -346,12 +346,12 @@
         padding-right: .5rem
     }
 
-    .bs > [class*="bs"].bsxs-\|flushLeft {
+    .bs.bsxs--flushLeft, .bs > .bsxs-\|flushLeft {
 
         padding-left: 0
     }
 
-    .bs > [class*="bs"].bsxs-\|flushRight {
+    .bs.bsxs--flushRight, .bs > .bsxs-\|flushRight {
 
         padding-right: 0
     }
@@ -522,12 +522,12 @@
         padding-right: .5rem
     }
 
-    .bs > [class*="bs"].bssm-\|flushLeft {
+    .bs.bssm--flushLeft, .bs > .bssm-\|flushLeft {
 
         padding-left: 0
     }
 
-    .bs > [class*="bs"].bssm-\|flushRight {
+    .bs.bssm--flushRight, .bs > .bssm-\|flushRight {
 
         padding-right: 0
     }
@@ -698,12 +698,12 @@
         padding-right: .5rem
     }
 
-    .bs > [class*="bs"].bsmd-\|flushLeft {
+    .bs.bsmd--flushLeft, .bs > .bsmd-\|flushLeft {
 
         padding-left: 0
     }
 
-    .bs > [class*="bs"].bsmd-\|flushRight {
+    .bs.bsmd--flushRight, .bs > .bsmd-\|flushRight {
 
         padding-right: 0
     }
@@ -874,12 +874,12 @@
         padding-right: .5rem
     }
 
-    .bs > [class*="bs"].bslg-\|flushLeft {
+    .bs.bslg--flushLeft, .bs > .bslg-\|flushLeft {
 
         padding-left: 0
     }
 
-    .bs > [class*="bs"].bslg-\|flushRight {
+    .bs.bslg--flushRight, .bs > .bslg-\|flushRight {
 
         padding-right: 0
     }
@@ -1050,12 +1050,12 @@
         padding-right: .5rem
     }
 
-    .bs > [class*="bs"].bsxl-\|flushLeft {
+    .bs.bsxl--flushLeft, .bs > .bsxl-\|flushLeft {
 
         padding-left: 0
     }
 
-    .bs > [class*="bs"].bsxl-\|flushRight {
+    .bs.bsxl--flushRight, .bs > .bsxl-\|flushRight {
 
         padding-right: 0
     }
