@@ -32,8 +32,8 @@ module.exports = postcss.plugin('blackstar', function myplugin(options) {
       });
 
       appendMediaQueryRules(atRule, combineRules.xs, '(max-width: 544px)');
-      appendMediaQueryRules(atRule, combineRules.sm, '(min-width: 545px) and (max-width: 767px)');
-      appendMediaQueryRules(atRule, combineRules.md, '(min-width: 768px) and (max-width: 1023px)');
+      appendMediaQueryRules(atRule, combineRules.sm, '(min-width: 545px)');
+      appendMediaQueryRules(atRule, combineRules.md, '(min-width: 768px)');
       appendMediaQueryRules(atRule, combineRules.lg, '(min-width: 1024px)');
       appendMediaQueryRules(atRule, combineRules.xl, '(min-width: 1280px)');
       atRule.remove();
