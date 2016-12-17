@@ -6,6 +6,10 @@ var postcss = require('postcss');
 const BLACK_STAR = 'bs';
 const DEVICE_NAMESPACES = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 const FRACTION_BASES = [1,2,3,4,5,6];
+const NAMESPACE_SEPARATOR = '_';
+const MODIFIER_SEPARATOR = '--';
+const FRACTION_SEPARATOR = '-';
+const NESTING_SEPARATOR = '_';
 
 module.exports = postcss.plugin('blackstar', function myplugin(options) {
   return function(root) {
@@ -44,9 +48,9 @@ function getClassName(namespace, fractionParts) {
     let fractions = fractionParts
       .filter((part) => part && part.length === 2)
       .map((part) => {
-        return part[0] === part[1] ? part[0] : `${part[0]}\\/${part[1]}`
+        return part[0] === part[1] ? part[0] : `${part[0]}${FRACTION_SEPARATOR}${part[1]}`
       });
-    className += `-${fractions.join('\\|')}`;
+    className += `${NAMESPACE_SEPARATOR}${fractions.join(NESTING_SEPARATOR)}`;
   }
   return className;
 }
@@ -54,7 +58,7 @@ function getClassName(namespace, fractionParts) {
 function getFlushClassName(namespace, side, isRoot) {
   let className = getClassName(namespace);
   let sideKey = side === 'left' ? 'flushLeft' : 'flushRight';
-  let sideSeparator = isRoot ? '--' : '-\\|';
+  let sideSeparator = isRoot ? MODIFIER_SEPARATOR : NAMESPACE_SEPARATOR + NESTING_SEPARATOR;
   return `${className}${sideSeparator}${sideKey}`;
 }
 
